@@ -1,7 +1,7 @@
 pipeline {
 
   environment {
-    workDir = "C:\lcw-1\Lcw.Kubernetes.Test.App"
+    workDir = "C:\\lcw-1\\Lcw.Kubernetes.Test.App"
   }
 
   agent any
@@ -38,12 +38,12 @@ pipeline {
           }
         }
       }
-    }
+    
 
     stage('Deploying App to Kubernetes') {
       steps {
         script {
-          kubernetesDeploy(configs: "lcw-test-app-deploy.yml", kubeconfigId: "kubernetes")
+          sh 'kubectl create -f lcw-test-app-deploy.yaml'
         }
       }
     }
@@ -51,11 +51,10 @@ pipeline {
     stage('Service app to Kubernetes') {
       steps {
         script {
-          kubernetesDeploy(configs: "lcw-test-app-svc.yml", kubeconfigId: "kubernetes")
+          sh 'kubectl create -f lcw-test-app-svc.yaml'
         }
       }
     }
 
   }
-
 }
