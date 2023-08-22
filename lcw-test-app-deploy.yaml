@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lcw-test-app-deploy
+  labels:
+    name: lcw-test-app-deploy
+    app: lcw-test-app
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 100%
+  selector:
+    matchLabels:
+      name: lcw-test-app-pod
+      app: lcw-test-app
+  template:
+    metadata:
+      name: lcw-test-app-pod
+      labels:
+        name: lcw-test-app-pod
+        app: lcw-test-app
+    spec:
+      containers:
+        - name: lcw-test-app
+          image: saidoyk/kubetnetes-saidoyk-myapp:myfirst
+          ports:
+            - containerPort: 5000

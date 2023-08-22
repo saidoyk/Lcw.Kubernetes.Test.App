@@ -1,0 +1,24 @@
+FROM mcr.microsoft.com/dotnet/aspnet:7.0-jammy AS base
+WORKDIR /app
+
+FROM mcr.microsoft.com/dotnet/sdk:7.0-jammy AS build
+WORKDIR /src
+COPY Lcw.Kubernetes.Test.App.sln ./
+COPY Lcw.Kubernetes.Test.App/*.csproj ./Lcw.Kubernetes.Test.App/
+COPY Lcw.Kubernetes.Test.App.csproj/*.user ./Lcw.Kubernetes.Test.App.csproj/
+
+RUN dotnet restore
+COPY . .
+WORKDIR /src/Lcw.Kubernetes.Test.App
+RUN dotnet build -c Release -o /app
+
+WORKDIR /src/Lcw.Kubernetes.Test.App.csproj
+RUN dotnet build -c Release -o /app
+
+FROM build AS publish
+RUN dotnet publish -c Release -o /app
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app .
+ENTRYPOINT ["dotnet", "Lcw.Kubernetes.Test.App.sln"]

@@ -1,0 +1,7 @@
+C:\lcw\Lcw.Kubernetes.Test.App\Lcw.Kubernetes.Test.App\bin\Debug\netcoreapp3.1\publish\Lcw.Kubernetes.Test.App.exe
+C:\lcw\Lcw.Kubernetes.Test.App\Lcw.Kubernetes.Test.App\bin\Debug\netcoreapp3.1\publish\appsettings.Development.json
+C:\lcw\Lcw.Kubernetes.Test.App\Lcw.Kubernetes.Test.App\bin\Debug\netcoreapp3.1\publish\appsettings.json
+C:\lcw\Lcw.Kubernetes.Test.App\Lcw.Kubernetes.Test.App\bin\Debug\netcoreapp3.1\publish\Lcw.Kubernetes.Test.App.dll
+C:\lcw\Lcw.Kubernetes.Test.App\Lcw.Kubernetes.Test.App\bin\Debug\netcoreapp3.1\publish\Lcw.Kubernetes.Test.App.deps.json
+C:\lcw\Lcw.Kubernetes.Test.App\Lcw.Kubernetes.Test.App\bin\Debug\netcoreapp3.1\publish\Lcw.Kubernetes.Test.App.runtimeconfig.json
+C:\lcw\Lcw.Kubernetes.Test.App\Lcw.Kubernetes.Test.App\bin\Debug\netcoreapp3.1\publish\Lcw.Kubernetes.Test.App.pdb
