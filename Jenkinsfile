@@ -1,24 +1,29 @@
 pipeline {
 
   environment {
-    dockerimagename = "saidoyk/kubetnetes-saidoyk-myapp"
-    dockerImage = ""
+    workDir = "C:\lcw-1\Lcw.Kubernetes.Test.App"
   }
 
   agent any
 
   stages {
 
+    stage('change directory') {
+      steps {
+        sh 'cd $workDir'
+      }
+    }
+
     stage('Checkout Source') {
       steps {
-        git 'https://github.com/saidoyk/Lcw.Kubernetes.Test.App'
+        sh 'git reset --hard origin/master'
       }
     }
 
     stage('Build image') {
       steps{
         script {
-          dockerImage = docker.build dockerimagename
+          sh 'docker build -t saidoyk/kubetnetes-saidoyk-myapp:latest .' 
         }
       }
     }
@@ -29,8 +34,7 @@ pipeline {
            }
       steps{
         script {
-          docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
-            dockerImage.push("myfirst")
+          sh 'docker push -t saidoyk/kubetnetes-saidoyk-myapp:latest ' 
           }
         }
       }
