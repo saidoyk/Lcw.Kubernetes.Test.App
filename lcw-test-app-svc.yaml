@@ -6,11 +6,11 @@ metadata:
     name: lcw-test-app-svc
     app: lcw-test-app
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
     name: lcw-test-app-pod
     app: lcw-test-app
   ports:
     - port: 5001
-      targetPort: 5001
-      nodePort: 30008
+      targetPort: 5000
+      nodePort: 30036

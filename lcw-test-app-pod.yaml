@@ -8,6 +8,6 @@ metadata:
 spec:
   containers:
     - name: lcw-test-app
-      image: saidoyk/kubetnetes-saidoyk-myapp:myfirst
+      image: saidoyk/kubetnetes-saidoyk-myapp:latest
         ports:
             - containerPort: 5000
