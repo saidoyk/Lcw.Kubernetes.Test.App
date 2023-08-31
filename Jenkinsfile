@@ -1,49 +1,52 @@
 pipeline {
 
   environment {
-    workDir = "C:\\lcw-1\\Lcw.Kubernetes.Test.App"
+    dockerimagename = "saidoyk/kubetnetes-saidoyk-myapp"
+    dockerImage = ""
   }
 
   agent any
 
   stages {
-
-    stage('change directory') {
-      steps {
-        sh 'cd $workDir'
-      }
-    }
-
     stage('Checkout Source') {
       steps {
-        sh 'git reset --hard origin/master'
-      }
+          script {
+              bat 'if exist Lcw.Kubernetes.Test.App (git pull origin main)'
+              bat 'if not exist Lcw.Kubernetes.Test.App (git clone https://github.com/saidoyk/Lcw.Kubernetes.Test.App.git)'
+          }
+        }
     }
-
     stage('Build image') {
       steps{
         script {
-          sh 'docker build -t saidoyk/kubetnetes-saidoyk-myapp:latest .' 
+          bat 'docker build . -t my-web-app -f Lcw.Kubernetes.Test.App/Dockerfile'
         }
       }
     }
-
-    stage('Pushing Image') {
-      environment {
-               registryCredential = 'dockerhublogin'
-           }
+    
+    stage('Tag image') {
       steps{
         script {
-          sh 'docker push -t saidoyk/kubetnetes-saidoyk-myapp:latest ' 
-          }
+          bat 'docker tag my-web-app saidoyk/kubetnetes-saidoyk-myapp:latest'
         }
       }
+    }
     
+    stage('Push image') {
+      steps{
+        script {
+            withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerpwd')]) {
+    bat 'docker login -u ahmetsaidoyanik@icloud.com -p %dockerpwd%'
+    bat 'docker push saidoyk/kubetnetes-saidoyk-myapp:latest'
+}
+        }
+      }
+    }
 
     stage('Deploying App to Kubernetes') {
       steps {
         script {
-          sh 'kubectl create -f lcw-test-app-deploy.yaml'
+            kubernetesDeploy(configs: "lcw-test-app-deploy.yaml", kubeconfigId: "kubernetes")
         }
       }
     }
@@ -51,10 +54,11 @@ pipeline {
     stage('Service app to Kubernetes') {
       steps {
         script {
-          sh 'kubectl create -f lcw-test-app-svc.yaml'
+            kubernetesDeploy(configs: "lcw-test-app-svc.yaml", kubeconfigId: "kubernetes")
         }
       }
     }
 
   }
 }
+
