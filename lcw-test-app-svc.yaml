@@ -11,6 +11,6 @@ spec:
     name: lcw-test-app-pod
     app: lcw-test-app
   ports:
-    - port: 5001
-      targetPort: 5000
+    - port: 80
+      targetPort: 80
       nodePort: 30036
