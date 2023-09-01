@@ -26,4 +26,4 @@ spec:
         - name: lcw-test-app
           image: saidoyk/kubetnetes-saidoyk-myapp:myfirst
           ports:
-            - containerPort: 80
+            - containerPort: 81
